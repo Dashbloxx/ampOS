@@ -13,6 +13,9 @@ static uint32_t terminal_write(file_t *node, uint32_t offset, uint32_t size, uin
     return size;
 }
 
+/**
+ *  @brief Create some character devices that represent the terminals from `terminal.c` & `terminal.h`.
+ */
 void tty_initialize()
 {
     /* Create a character device that represents the output of the current terminal. */
@@ -32,4 +35,6 @@ void tty_initialize()
     stdout->readdir = NULL;
     stdout->finddir = NULL;
     stdout->ptr = NULL;
+
+    /* TODO: Implement stdin, which represents the keyboard ONLY when using any terminal that isn't serial. */
 }
