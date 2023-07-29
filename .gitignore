@@ -1,0 +1,7 @@
+bin/
+disk/
+kern/obj/
+*.o
+*.bin
+*.elf
+*.tar.gz
