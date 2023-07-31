@@ -4,15 +4,11 @@
 #include <kernel/terminal.h>
 #include <kernel/multiboot.h>
 #include <kernel/arch/i386/idt.h>
+#include <kernel/arch/i386/exceptions.h>
 #include <kernel/page.h>
 
 extern uint8_t start_of_kernel;
 extern uint8_t end_of_kernel;
-
-void div_by_zero()
-{
-    terminal_printf(current_terminal, "Well, well well! Someone decided to divide by zero!\n");
-}
 
 void kernel_main(multiboot_t *bootinfo) 
 {
@@ -22,7 +18,7 @@ void kernel_main(multiboot_t *bootinfo)
 
     /* Set up interrupt-related routines. */
     idt_initialize();
-    idt_register(0, IDT_INTGATE, &div_by_zero);
+    idt_register(0, IDT_INTGATE, &exception_divzero);
 
     /* Initialize page frame allocator. */
     page_initialize(bootinfo);
