@@ -3,12 +3,16 @@
 #include <libc/string.h>
 #include <kernel/terminal.h>
 #include <kernel/multiboot.h>
-#include <kernel/arch/i386/interrupt.h>
+#include <kernel/arch/i386/idt.h>
+#include <kernel/page.h>
 
 extern uint8_t start_of_kernel;
 extern uint8_t end_of_kernel;
 
-uint32_t memlimit;
+void div_by_zero()
+{
+    terminal_printf(current_terminal, "Well, well well! Someone decided to divide by zero!\n");
+}
 
 void kernel_main(multiboot_t *bootinfo) 
 {
@@ -18,14 +22,14 @@ void kernel_main(multiboot_t *bootinfo)
 
     /* Set up interrupt-related routines. */
     idt_initialize();
-    irq_initialize();
+    idt_register(0, IDT_INTGATE, &div_by_zero);
 
     /* Initialize page frame allocator. */
     page_initialize(bootinfo);
-    
-    /* Allocate a page. */
-    void *a = page_alloc(1, 0);
-    
-    /* Print the address of the page. */
-    terminal_printf(current_terminal, "Got this: %x...\n", (uint32_t)a);
+
+    int i = 12;
+    int b = i / 0;
+    b = i;
+
+    terminal_printf(current_terminal, "Hello, world!\n");
 }

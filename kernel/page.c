@@ -8,7 +8,7 @@
 #include <kernel/mem.h>
 
 #define PAGE_ALLOCATED 0x1
-#define PAGE_RESERVED  0x2
+#define PAGE_RESERVED 0x2
 #define PAGE_NOTFREE (PAGE_ALLOCATED | PAGE_RESERVED)
 
 #define PAGE_ALLOC_ZEROPAGE 0x1
@@ -18,7 +18,6 @@
 #define BUDDY(i) ((i) ^ (1 << pageinfo[(i)].order))
 #define BUDDY_OF_ORDER(i, ord) ((i) ^ (1 << (ord)))
 
-extern void *start_of_kernel;
 extern void *end_of_kernel;
 
 struct page
@@ -150,7 +149,7 @@ static int split_to_buddy(pageindex_t this_idx)
 }
 
 void show_buddyinfo() {
-    terminal_printf(current_terminal, "buddy:");
+    terminal_printf(current_terminal, "Buddy:");
     for (int i = 0; i < MAX_ORDER; i++)
     {
         terminal_printf(current_terminal, " %d", buddy_count[i]);
@@ -281,7 +280,7 @@ void page_initialize(multiboot_t *bootinfo)
     memsize = memsize & ~(PAGESIZE-1);
     pageinfo = (struct page *)&end_of_kernel;
     page_total = memsize / PAGESIZE;
-    for (uint32_t i=0; i<page_total; i++)
+    for (uint32_t i = 0; i < page_total; i++)
         pageinfo[i].flags = PAGE_RESERVED;
 
     protmem_freearea_addr = (uint32_t)&pageinfo[page_total];

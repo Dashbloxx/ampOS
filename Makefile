@@ -1,6 +1,7 @@
 TOOLPREFIX = i686-elf-
 CC = $(TOOLPREFIX)gcc
 AS = $(TOOLPREFIX)as
+QEMU = qemu-system-i386
 NASM = nasm
 NASMFLAGS = -felf
 CFLAGS = -std=gnu99 -ffreestanding -I.
@@ -27,6 +28,9 @@ kernel.bin: $(OBJS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
+
+run:
+	qemu-system-i386.exe -kernel kernel.bin -m 512M
 
 clean:
 	rm -f kernel/*.o kernel/arch/i386/*.o kernel.bin
