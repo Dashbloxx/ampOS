@@ -1,7 +1,6 @@
 #pragma once
 
 #include <libc/stdint.h>
-#include <kernel/file.h>
 
 void terminal_initialize();
 

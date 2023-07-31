@@ -1,12 +1,13 @@
 #pragma once
 
-#include <libc/stddef.h>
 #include <libc/stdint.h>
+#include <libc/stddef.h>
+#include <kernel/multiboot.h>
 
-typedef struct
-{
-    size_t size;
-    uint8_t *data;
-} bitmap_t;
+#define PAGESIZE 4096
 
-#define PAGE_SIZE 4096
+void page_initialize(multiboot_t *bootinfo);
+int page_getnfree(void);
+void *page_alloc(size_t, int);
+void page_free(void *addr);
+void *get_zeropage(size_t);
