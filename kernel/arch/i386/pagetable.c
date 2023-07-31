@@ -1,6 +1,6 @@
 #include <libc/stdint.h>
 #include <kernel/arch/i386/pagetable.h>
-#include <kernel/mem.h>
+#include <kernel/common.h>
 #include <kernel/page.h>
 
 #define PDE_PRESENT 0x1

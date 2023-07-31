@@ -8,6 +8,7 @@
 #include <kernel/arch/i386/pic.h>
 #include <kernel/arch/i386/pagetable.h>
 #include <kernel/page.h>
+#include <kernel/malloc.h>
 
 extern uint8_t start_of_kernel;
 extern uint8_t end_of_kernel;
@@ -18,12 +19,13 @@ void kernel_main(multiboot_t *bootinfo)
     terminal_initialize();
 	terminal_printf(current_terminal, "Start of kernel: %x\nEnd of kernel: %x\nBootloader: %s\n", &start_of_kernel, &end_of_kernel, bootinfo->bootloader_name);
 
+    /* Initialize heap & page frame allocator */
+    malloc_initialize();
+    page_initialize(bootinfo);
+
     /* Set up interrupt-related routines. */
     idt_initialize();
     idt_register(0, IDT_INTGATE, &exception_divzero);
-
-    /* Initialize page frame allocator. */
-    page_initialize(bootinfo);
 
     /* Initialize the PIC. */
     pic_initialize();

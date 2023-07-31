@@ -1,6 +1,6 @@
 #pragma once
 
-#include <kernel/mem.h>
+#include <kernel/common.h>
 
 extern void flushtlb(void *addr);
 void pagetbl_initialize();

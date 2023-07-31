@@ -4,6 +4,8 @@
 #include <libc/stddef.h>
 #include <kernel/multiboot.h>
 
+#define pagealign(a) ((a)&~(PAGESIZE-1))
+
 #define PAGESIZE 4096
 
 void page_initialize(multiboot_t *bootinfo);

@@ -5,7 +5,7 @@
 #include <kernel/terminal.h>
 #include <kernel/list.h>
 #include <kernel/multiboot.h>
-#include <kernel/mem.h>
+#include <kernel/common.h>
 
 #define PAGE_ALLOCATED 0x1
 #define PAGE_RESERVED 0x2
