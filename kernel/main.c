@@ -5,6 +5,8 @@
 #include <kernel/multiboot.h>
 #include <kernel/arch/i386/idt.h>
 #include <kernel/arch/i386/exceptions.h>
+#include <kernel/arch/i386/pic.h>
+#include <kernel/arch/i386/pagetable.h>
 #include <kernel/page.h>
 
 extern uint8_t start_of_kernel;
@@ -23,9 +25,11 @@ void kernel_main(multiboot_t *bootinfo)
     /* Initialize page frame allocator. */
     page_initialize(bootinfo);
 
-    int i = 12;
-    int b = i / 0;
-    b = i;
+    /* Initialize the PIC. */
+    pic_initialize();
+
+    /* Initialize page tables. */
+    pagetbl_initialize();
 
     terminal_printf(current_terminal, "Hello, world!\n");
 }
