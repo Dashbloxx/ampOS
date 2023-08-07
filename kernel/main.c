@@ -3,6 +3,7 @@
 #include <libc/string.h>
 #include <kernel/terminal.h>
 #include <kernel/multiboot.h>
+#include <kernel/arch/i386/gdt.h>
 #include <kernel/arch/i386/idt.h>
 #include <kernel/arch/i386/exceptions.h>
 #include <kernel/arch/i386/pic.h>
@@ -18,6 +19,9 @@ void kernel_main(multiboot_t *bootinfo)
     /* Initialize all available terminals & print kernel boundaries. */
     terminal_initialize();
 	terminal_printf(current_terminal, "Start of kernel: %x\nEnd of kernel: %x\nBootloader: %s\n", &start_of_kernel, &end_of_kernel, bootinfo->bootloader_name);
+
+    /* Initialize global descriptor tables. */
+    gdt_initialize();
 
     /* Initialize heap & page frame allocator */
     malloc_initialize();
