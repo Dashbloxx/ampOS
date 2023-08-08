@@ -15,7 +15,7 @@
 #define PIT_LOAD16 0x30
 #define PIT_CNT0 0x0
 
-#define PIT_IRQ 0
+#define PIT_IRQ 32
 
 #define CNT_100HZ 0x2e9b
 
@@ -30,6 +30,6 @@ void pit_initialize() {
     outb(PIT_MODE_CMD_REG, PIT_CNTMODE_BIN | PIT_OPMODE_RATE | PIT_LOAD16 | PIT_CNT0);
     outb(PIT_CH0_DATA, CNT_100HZ & 0xff);
     outb(PIT_CH0_DATA, CNT_100HZ >> 8);
-    idt_register(32, IDT_INTGATE, int_32);
+    idt_register(PIT_IRQ, IDT_INTGATE, int_32);
     pic_clearmask(PIT_IRQ);
 }

@@ -32,7 +32,7 @@ void idt_register(uint8_t vecnum, uint8_t gatetype, void (*base)(void))
     desc->reserved = 0;
     desc->flags = gatetype | IDT_PRESENT | IDT_GATE32 | IDT_DPL3;
 
-    terminal_printf(current_terminal, "IDT: Registered %d\n", vecnum);
+    terminal_printf(current_terminal, "Interrupt: Registered %d\n", vecnum);
 }
 
 void idt_unregister(uint8_t vecnum)
