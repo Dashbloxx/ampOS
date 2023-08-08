@@ -5,14 +5,21 @@
 #include <kernel/multiboot.h>
 #include <kernel/arch/i386/gdt.h>
 #include <kernel/arch/i386/idt.h>
-#include <kernel/arch/i386/exceptions.h>
 #include <kernel/arch/i386/pic.h>
+#include <kernel/arch/i386/pit.h>
+#include <kernel/arch/i386/timer.h>
+#include <kernel/arch/i386/exceptions.h>
 #include <kernel/arch/i386/pagetable.h>
 #include <kernel/page.h>
 #include <kernel/malloc.h>
 
 extern uint8_t start_of_kernel;
 extern uint8_t end_of_kernel;
+
+void myfunc()
+{
+    terminal_printf(current_terminal, "Hello, world!\n");
+}
 
 void kernel_main(multiboot_t *bootinfo) 
 {
@@ -34,8 +41,9 @@ void kernel_main(multiboot_t *bootinfo)
     /* Initialize the PIC. */
     pic_initialize();
 
+    /* Initialize the PIT. */
+    pit_initialize();
+
     /* Initialize page tables. */
     pagetbl_initialize();
-
-    terminal_printf(current_terminal, "Hello, world!\n");
 }
