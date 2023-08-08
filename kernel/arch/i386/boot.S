@@ -31,7 +31,6 @@ _start:
     /* push multiboot parameter to kmain() */
     pushl %ebx
 
-    cli
     /* ...and run! */
     call kernel_main
 

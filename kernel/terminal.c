@@ -131,34 +131,25 @@ void terminal_printf(terminal_t *terminal, const char* format, ...)
                     terminal_puts(terminal, str);
                     break;
                 }
-                case 'd':
-                {
+                case 'd': {
                     int num = va_arg(args, int);
-                    if (num == 0)
-                    {
+                    if (num == 0) {
                         terminal_putc(terminal, '0');
-                        return;
+                    } else {
+                        char buffer[32];
+                        int i = 0;
+                        if (num < 0) {
+                            terminal_putc(terminal, '-');
+                            num = -num;
+                        }
+                        while (num > 0) {
+                            buffer[i++] = '0' + num % 10;
+                            num /= 10;
+                        }
+                        while (i > 0) {
+                            terminal_putc(terminal, buffer[--i]);
+                        }
                     }
-
-                    int32_t acc = num;
-                    char c[32];
-                    int i = 0;
-                    while (acc > 0)
-                    {
-                        c[i] = '0' + acc%10;
-                        acc /= 10;
-                        i++;
-                    }
-                    c[i] = 0;
-
-                    char c2[32];
-                    c2[i--] = 0;
-                    int j = 0;
-                    while(i >= 0)
-                    {
-                        c2[i--] = c[j++];
-                    }
-                    terminal_puts(terminal, c2);
                     break;
                 }
                 case 'x':
