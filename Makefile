@@ -30,7 +30,7 @@ kernel.bin: $(OBJS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 run:
-	qemu-system-i386.exe -kernel kernel.bin -m 512M
+	qemu-system-i386 -kernel kernel.bin -m 512M
 
 clean:
 	rm -f kernel/*.o kernel/arch/i386/*.o kernel.bin

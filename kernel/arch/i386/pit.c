@@ -1,6 +1,5 @@
 #include <kernel/arch/i386/pit.h>
 #include <kernel/arch/i386/pic.h>
-#include <kernel/arch/i386/timer.h>
 #include <kernel/arch/i386/idt.h>
 #include <kernel/arch/i386/ports.h>
 #include <kernel/terminal.h>
@@ -20,7 +19,9 @@
 
 #define CNT_100HZ 0x2e9b
 
-void pit_isr() {
+extern void int_32();
+
+void pit_tick() {
     terminal_printf(current_terminal, "Hello, world!\n");
     pic_sendeoi(PIT_IRQ);
 }
@@ -29,6 +30,6 @@ void pit_initialize() {
     outb(PIT_MODE_CMD_REG, PIT_CNTMODE_BIN | PIT_OPMODE_RATE | PIT_LOAD16 | PIT_CNT0);
     outb(PIT_CH0_DATA, CNT_100HZ & 0xff);
     outb(PIT_CH0_DATA, CNT_100HZ >> 8);
-    idt_register(IRQ_TO_INTVEC(PIT_IRQ), IDT_INTGATE, pit_isr);
+    idt_register(IRQ_TO_INTVEC(PIT_IRQ), IDT_INTGATE, int_32);
     pic_clearmask(PIT_IRQ);
 }

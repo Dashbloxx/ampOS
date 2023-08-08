@@ -7,7 +7,6 @@
 #include <kernel/arch/i386/idt.h>
 #include <kernel/arch/i386/pic.h>
 #include <kernel/arch/i386/pit.h>
-#include <kernel/arch/i386/timer.h>
 #include <kernel/arch/i386/exceptions.h>
 #include <kernel/arch/i386/pagetable.h>
 #include <kernel/page.h>
